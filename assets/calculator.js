@@ -1,4 +1,5 @@
-  // Your web app's Firebase configuration
+$(document).ready(function() {
+// Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDycl7QDN7yFuOTYuFcaoJSvB1lEAgiKnw",
     authDomain: "calculator-challenge-240ba.firebaseapp.com",
@@ -8,7 +9,7 @@
     messagingSenderId: "1051426126380",
     appId: "1:1051426126380:web:e07a8d370613b83b"
   };
-  // Initialize Firebase
+  //Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
   var dataRef = firebase.database();
@@ -32,6 +33,7 @@
     $("#first-number, #second-number, #operator, #result").empty();
   }
 
+  //Display and change to number when clicked
   $(".number").on("click", function() {
     if (isCalculated) {
       initializeCalculator();
@@ -46,12 +48,11 @@
     }
   });
 
-
-
-
-  function clearRecentCalcs() {
+  //Display recent calculations, limits to 10 results on Firebase and HTML
+  function displayRecentCalcs() {
     $("#recent-calculations").empty(); 
-    //Firebase watcher
+
+    //Watcher function
     dataRef.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) { 
       if($("#recent-calculations").children().length < 10) {
         $("#recent-calculations").prepend(
@@ -65,35 +66,33 @@
           );
     });
   }
-  clearRecentCalcs();
+  displayRecentCalcs();
 
+  //Display and change to operator when clicked
   $(".operator").on("click", function() {
-    //Check if firstNumber has already been selected or if ran calculation already
     if (!firstNumber || isCalculated) {
       return false;
     }
 
     isOperatorChosen = true;
 
-    //Store operator
     operator = $(this).val();
 
-    //Set HTML text of #operator to the text of what was clicked
     $("#operator").text($(this).text());
   });
+
+
+  //Calculation, display, and pushing result into Firebase
   $(".equal").on("click", function() {
     if (isCalculated) {
       return false;
     }
 
-    //Can't write more numbers on Result after calculations
     isCalculated = true;
 
     firstNumber = parseInt(firstNumber);
     secondNumber = parseInt(secondNumber);
 
-    //Based on the operator that was chosen.
-    //Then run the operation and set the HTML text of the result
     if (operator === "plus") {
       result = firstNumber + secondNumber;
       operator = "+";
@@ -110,6 +109,7 @@
       result = Math.pow(firstNumber, secondNumber);
       operator = "^";
     }
+
     if(result !== Infinity) {
         dataRef.ref().push({
           firstNumber: firstNumber,
@@ -123,16 +123,16 @@
       $("#result").text("Can't divide by 0!")
     };
 
-    // clearRecentCalcs();
     isCalculated = true;
   });
      
 
 
-  
+  //Resets state after Clear clicked
   $(".clear").on("click", function() {
     initializeCalculator();
   });
 
   //Initial state (reset)
   initializeCalculator();
+});

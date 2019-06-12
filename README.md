@@ -1,2 +1,3 @@
 # calculator-challenge
-Used Firebase, Bootstrap, and Javascript + jQuery.
+https://12aayub.github.io/calculator-challenge/
+Used Bootstrap, Firebase, Javascript & jQuery.
