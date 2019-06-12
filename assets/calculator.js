@@ -1,4 +1,3 @@
-$(document).ready(function() {
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDycl7QDN7yFuOTYuFcaoJSvB1lEAgiKnw",
@@ -49,20 +48,24 @@ $(document).ready(function() {
 
 
 
-  //Firebase watcher
-  dataRef.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) { 
-    $("#recent-member").prepend(
-      "<span>" + snapshot.val().firstNumber + "</span>" +
-      "<span> " + snapshot.val().operator + " </span>" +
-      "<span>" + snapshot.val().secondNumber + " = " + "</span>" +
-      "<span>" + snapshot.val().result + "</span>" +
-      "<br />"
-      )
-  });
 
   function clearRecentCalcs() {
-    $("#recent-member").empty(); 
-  }  
+    $("#recent-calculations").empty(); 
+    //Firebase watcher
+    dataRef.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) { 
+      if($("#recent-calculations").children().length < 10) {
+        $("#recent-calculations").prepend(
+          "<p>" + snapshot.val().firstNumber + " " + snapshot.val().operator + " " + snapshot.val().secondNumber + " = " + snapshot.val().result + "</p>"
+          )
+      }
+      else 
+      $("#recent-calculations").children().last().remove();
+        $("#recent-calculations").prepend(
+          "<p>" + snapshot.val().firstNumber + " " + snapshot.val().operator + " " + snapshot.val().secondNumber + " = " + snapshot.val().result + "</p>"
+          );
+    });
+  }
+  clearRecentCalcs();
 
   $(".operator").on("click", function() {
     //Check if firstNumber has already been selected or if ran calculation already
@@ -120,17 +123,7 @@ $(document).ready(function() {
       $("#result").text("Can't divide by 0!")
     };
 
-    clearRecentCalcs();
-    
-    dataRef.ref().orderByChild("dateAdded").limitToLast(10).on("child_added", function(snapshot) { 
-      $("#recent-member").prepend(
-        "<span>" + snapshot.val().firstNumber + "</span>" +
-        "<span> " + snapshot.val().operator + " </span>" +
-        "<span>" + snapshot.val().secondNumber + " = " + "</span>" +
-        "<span>" + snapshot.val().result + "</span>" +
-        "<br />"
-        )
-    });
+    // clearRecentCalcs();
     isCalculated = true;
   });
      
@@ -143,4 +136,3 @@ $(document).ready(function() {
 
   //Initial state (reset)
   initializeCalculator();
-});
