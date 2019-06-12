@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <h3 class="card-header">Calculator</h3>
+            <div class="card-body">
+              <button id="button-1" class="number" value="1">
+                <span>1</span>
+              </button>
+              <button id="button-2" class="number" value="2">
+                <span>2</span>
+              </button>
+              <button id="button-3" class="number" value="3">
+                <span>3</span>
+              </button>
+              <button id="button-plus" class="operator" value="plus">
+                <span>+</span>
+              </button>
+              <br /><br />
+              <button id="button-4" class="number" value="4">
+                <span>4</span>
+              </button>
+              <button id="button-5" class="number" value="5">
+                <span>5</span>
+              </button>
+              <button id="button-6" class="number" value="6">
+                <span>6</span>
+              </button>
+              <button id="button-minus" class="operator" value="minus">
+                <span>&minus;</span>
+              </button>
+              <br /><br />
+              <button id="button-7" class="number" value="7">
+                <span>7</span>
+              </button>
+              <button id="button-8" class="number" value="8">
+                <span>8</span>
+              </button>
+              <button id="button-9" class="number" value="9">
+                <span>9</span>
+              </button>
+              <button id="button-multiply" class="operator" value="times">
+                <span>&times;</span>
+              </button>
+              <br /><br />
+              <button id="button-0" class="number" value="0">
+                <span>0</span>
+              </button>
+              <button id="button-divide" class="operator" value="divide">
+                <span>&divide;</span>
+              </button>
+              <button id="button-power" class="operator" value="power">
+                <span>^</span>
+              </button>
+              <button id="button-equal" class="equal" value="equals">
+                <span>=</span>
+              </button>
+              <br /><br />
+              <button id="button-clear" class="clear" value="clear">
+                <span>clear</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <h3 class="card-header">Result</h3>
+            <div class="card-body">
+              <h1 id="first-number"></h1>
+              <h1 id="operator"></h1>
+              <h1 id="second-number"></h1>
+              <hr />
+              <h1 id="result"></h1>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <h3 class="card-header">
+              Most Recent Calculations (Last 10)
+            </h3>
+            <div class="card-body">
+              <div id="recent-member"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="calculator.js"></script>
+  </body>
+</html>
